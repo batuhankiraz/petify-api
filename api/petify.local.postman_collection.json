@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "faa7ac18-839d-43a3-819f-fc4e22271fdb",
+		"name": "petify.local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://petify.local:8081/users",
+							"protocol": "http",
+							"host": [
+								"petify",
+								"local"
+							],
+							"port": "8081",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://petify.local:8081/user/0",
+							"protocol": "http",
+							"host": [
+								"petify",
+								"local"
+							],
+							"port": "8081",
+							"path": [
+								"user",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pets",
+			"item": [
+				{
+					"name": "pets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://petify.local:8081/pets",
+							"protocol": "http",
+							"host": [
+								"petify",
+								"local"
+							],
+							"port": "8081",
+							"path": [
+								"pets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pet/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://petify.local:8081/pet/4028808f7d53b058017d53b072450000",
+							"protocol": "http",
+							"host": [
+								"petify",
+								"local"
+							],
+							"port": "8081",
+							"path": [
+								"pet",
+								"4028808f7d53b058017d53b072450000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pet/save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Bob\",\r\n    \"family\": \"Cooker\",\r\n    \"race\": \"Dog\",\r\n    \"gender\": \"Boy\",\r\n    \"birthDate\": \"2013\",\r\n    \"color\": \"white-brown\",\r\n    \"petDesc\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://petify.local:8081/pet/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"pet",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
