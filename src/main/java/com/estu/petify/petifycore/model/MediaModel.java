@@ -2,6 +2,7 @@ package com.estu.petify.petifycore.model;
 
 import com.estu.petify.petifycore.model.user.UserModel;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,6 +29,7 @@ public class MediaModel implements Serializable {
      */
     @Column(name = "picByte")
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] picByte;
 
     @OneToOne(fetch = FetchType.LAZY)
