@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.FieldError;
@@ -35,7 +36,7 @@ public class PetifyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PetifyApplication.class, args);
 	}
-/*
+	/*
 	@Bean
 	public CommandLineRunner loadData(UserRepository userRepository){
 		return args -> {
@@ -54,5 +55,5 @@ public class PetifyApplication {
 
 		};
 	}
- */
+	 */
 }

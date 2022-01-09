@@ -6,7 +6,6 @@ import com.estu.petify.petifycore.service.PetifyAdvertiseService;
 import com.estu.petify.petifycore.service.PetifyAuthService;
 import com.estu.petify.petifycore.service.UserService;
 import com.estu.petify.petifyfacades.dto.UserDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class AccountPageController {
         return new ResponseEntity<>(userModel, HttpStatus.OK);
     }
 
-    @GetMapping("{username}/my-adverts")
+    @GetMapping("/my-adverts/{username}")
     public ResponseEntity<List<AdvertiseModel>> getAdverts(@PathVariable final String username){
         List<AdvertiseModel> adverts = petifyAdvertiseService.getCurrentUserAdverts(username);
         if (CollectionUtils.isEmpty(adverts)){
