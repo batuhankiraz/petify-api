@@ -50,15 +50,14 @@ public class AccountPageController {
         }
     }
 
-    @PutMapping(value = "/update-profile", consumes = {"application/json"})
+    @PutMapping(value = "/update-profile/{username}", consumes = {"application/json"})
     public ResponseEntity<UserModel> updateMyInformation(@PathVariable final String username, @Valid @RequestBody UserDTO userDTO){
         UserModel userModel = defaultUserService.updateProfile(username, userDTO);
         return new ResponseEntity<>(userModel, HttpStatus.OK);
     }
 
-    @GetMapping("/my-adverts")
-    public ResponseEntity<List<AdvertiseModel>> getAdverts(){
-        final String username = petifyAuthService.getCurrentUser().getUsername();
+    @GetMapping("{username}/my-adverts")
+    public ResponseEntity<List<AdvertiseModel>> getAdverts(@PathVariable final String username){
         List<AdvertiseModel> adverts = petifyAdvertiseService.getCurrentUserAdverts(username);
         if (CollectionUtils.isEmpty(adverts)){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
