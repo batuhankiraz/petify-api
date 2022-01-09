@@ -35,10 +35,10 @@ public class AccountPageController {
     @Autowired
     private PetifyAdvertiseService petifyAdvertiseService;
 
-    @GetMapping()
-    public ResponseEntity<UserModel> myAccount(){
+    @GetMapping("/{username}")
+    public ResponseEntity<UserModel> myAccount(@PathVariable final String username){
         try{
-            UserModel currentUser = petifyAuthService.getCurrentUser();
+            UserModel currentUser = defaultUserService.getUserByUsername(username);
             if (Objects.isNull(currentUser)){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -51,9 +51,8 @@ public class AccountPageController {
     }
 
     @PutMapping(value = "/update-profile", consumes = {"application/json"})
-    public ResponseEntity<UserModel> updateMyInformation(@Valid @RequestBody UserDTO userDTO){
-        //TODO: Validasyon uygulanacak -> eğer valid değil ise yeni bir response fırlat.
-        UserModel userModel = defaultUserService.updateProfile(userDTO);
+    public ResponseEntity<UserModel> updateMyInformation(@PathVariable final String username, @Valid @RequestBody UserDTO userDTO){
+        UserModel userModel = defaultUserService.updateProfile(username, userDTO);
         return new ResponseEntity<>(userModel, HttpStatus.OK);
     }
 
@@ -67,11 +66,11 @@ public class AccountPageController {
         return new ResponseEntity<>(adverts, HttpStatus.OK);
     }
 
-    @DeleteMapping("/remove")
-    public void deleteAccount(){
-        UserModel currentUser = petifyAuthService.getCurrentUser();
+    @DeleteMapping("/remove/{username}")
+    public void deleteAccount(@PathVariable final String username){
+        UserModel user = defaultUserService.getUserByUsername(username);
         try {
-            defaultUserService.deleteUserById(currentUser.getId());
+            defaultUserService.deleteUserById(user.getId());
         }catch (Exception e){
             LOGGER.error(e.getLocalizedMessage());
         }

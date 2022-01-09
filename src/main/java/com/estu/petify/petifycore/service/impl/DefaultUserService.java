@@ -68,9 +68,9 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserModel updateProfile(final UserDTO userDTO){
+    public UserModel updateProfile(final String username, final UserDTO userDTO){
 
-        UserModel userModel = petifyAuthService.getCurrentUser();
+        UserModel userModel = getUserByUsername(username);
         try{
             userModel.setUsername(userDTO.geteMail());
             userModel.setFirstName(userDTO.getFirstName());
@@ -95,6 +95,11 @@ public class DefaultUserService implements UserService {
         }catch (Exception e){
             LOGGER.error(e.getLocalizedMessage());
         }
+    }
+
+    @Override
+    public UserModel getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow();
     }
 
     private void generateAndSendUserRegistrationMail(final UserModel userModel){

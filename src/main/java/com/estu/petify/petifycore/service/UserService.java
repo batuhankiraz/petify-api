@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface UserService {
     List<UserModel> getUsers();
     UserModel register(final UserDTO newUser);
-    UserModel updateProfile(final UserDTO userDTO);
+    UserModel updateProfile(final String username, final UserDTO userDTO);
     void deleteUserById(final String id);
+    UserModel getUserByUsername(final String username);
 }

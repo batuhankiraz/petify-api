@@ -28,9 +28,9 @@ public class AdvertisingPageController {
     @Autowired
     private PetifyAdvertiseService petifyAdvertiseService;
 
-    @PostMapping(consumes = {"application/json"})
-    public ResponseEntity<AdvertiseModel> advertise(@Valid @RequestBody final AdvertiseDTO advertiseDTO){
-        AdvertiseModel newAdvertise = petifyAdvertiseService.advertise(advertiseDTO);
+    @PostMapping(value = "/{username}", consumes = {"application/json"})
+    public ResponseEntity<AdvertiseModel> advertise(@PathVariable final String username, @Valid @RequestBody final AdvertiseDTO advertiseDTO){
+        AdvertiseModel newAdvertise = petifyAdvertiseService.advertise(username, advertiseDTO);
         return new ResponseEntity<>(newAdvertise, HttpStatus.OK);
     }
 

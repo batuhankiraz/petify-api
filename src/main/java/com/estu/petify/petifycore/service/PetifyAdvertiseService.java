@@ -6,7 +6,7 @@ import com.estu.petify.petifyfacades.dto.AdvertiseDTO;
 import java.util.List;
 
 public interface PetifyAdvertiseService {
-    AdvertiseModel advertise(final AdvertiseDTO advertiseDTO);
+    AdvertiseModel advertise(final String username, final AdvertiseDTO advertiseDTO);
 
     List<AdvertiseModel> getAllAdverts();
 
