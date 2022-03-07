@@ -1,11 +1,10 @@
 package com.estu.petify.petifycore.service.impl;
 
-import com.estu.petify.petifycore.model.advertising.AdvertiseModel;
-import com.estu.petify.petifycore.model.user.UserModel;
+import com.estu.petify.petifycore.model.AdvertiseModel;
+import com.estu.petify.petifycore.model.UserModel;
 import com.estu.petify.petifycore.repository.PetifyAdveritiseRepository;
 import com.estu.petify.petifycore.service.PetifyAdvertiseService;
 import com.estu.petify.petifycore.service.PetifyAuthService;
-import com.estu.petify.petifycore.service.UserService;
 import com.estu.petify.petifyfacades.dto.AdvertiseDTO;
 import com.estu.petify.petifystorefront.utils.PetifyDateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +22,14 @@ public class DefaultPetifyAdvertiseService implements PetifyAdvertiseService {
     private PetifyAdveritiseRepository petifyAdveritiseRepository;
     @Autowired
     private PetifyAuthService petifyAuthService;
-    @Autowired
-    private UserService defaultUserService;
 
     @Override
-    public AdvertiseModel advertise(final String username, AdvertiseDTO advertiseDTO) {
-        final UserModel user = defaultUserService.getUserByUsername(username);
+    public AdvertiseModel advertise(AdvertiseDTO advertiseDTO) {
+        final UserModel currentUser = petifyAuthService.getCurrentUser();
         final AdvertiseModel newAdvertise = new AdvertiseModel();
-        newAdvertise.setAdvertiserName(user.getUsername());
-        newAdvertise.setAdvertiserMail(user.geteMail());
-        newAdvertise.setAdvertiserPhoneNumber(user.getPhoneNumber());
+        newAdvertise.setAdvertiserName(currentUser.getUsername());
+        newAdvertise.setAdvertiserMail(currentUser.getEMail());
+        newAdvertise.setAdvertiserPhoneNumber(currentUser.getPhoneNumber());
         newAdvertise.setCreationTime(PetifyDateUtils.getCurrentDateWithPattern(DD_MM_YYYY));
         newAdvertise.setTitle(advertiseDTO.getTitle());
         newAdvertise.setType(advertiseDTO.getType());

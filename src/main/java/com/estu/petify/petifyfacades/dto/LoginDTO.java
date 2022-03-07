@@ -1,7 +1,13 @@
 package com.estu.petify.petifyfacades.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginDTO {
 
     @NotBlank(message = "Username is mandatory.")
@@ -9,19 +15,4 @@ public class LoginDTO {
     @NotBlank(message = "Password is mandatory.")
     private String password;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -1,7 +1,6 @@
 package com.estu.petify.petifycore.repository;
 
-import com.estu.petify.petifycore.model.user.UserModel;
-import com.estu.petify.petifycore.model.user.VerificationTokenModel;
+import com.estu.petify.petifycore.model.VerificationTokenModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

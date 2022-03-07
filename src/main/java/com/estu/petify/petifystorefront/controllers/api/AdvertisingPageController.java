@@ -1,36 +1,31 @@
-package com.estu.petify.petifystorefront.controllers;
+package com.estu.petify.petifystorefront.controllers.api;
 
 
-import com.estu.petify.petifycore.model.advertising.AdvertiseModel;
+import com.estu.petify.petifycore.model.AdvertiseModel;
 import com.estu.petify.petifycore.service.PetifyAdvertiseService;
 import com.estu.petify.petifyfacades.dto.AdvertiseDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.estu.petify.petifystorefront.controllers.CustomAbstractController;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/advertise")
-public class AdvertisingPageController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdvertisingPageController.class);
+@AllArgsConstructor
+@Slf4j
+public class AdvertisingPageController extends CustomAbstractController {
 
-    @Autowired
-    private PetifyAdvertiseService petifyAdvertiseService;
+    private final PetifyAdvertiseService petifyAdvertiseService;
 
-    @PostMapping(value = "/{username}", consumes = {"application/json"})
-    public ResponseEntity<AdvertiseModel> advertise(@PathVariable final String username, @Valid @RequestBody final AdvertiseDTO advertiseDTO){
-        AdvertiseModel newAdvertise = petifyAdvertiseService.advertise(username, advertiseDTO);
+    @PostMapping(consumes = {"application/json"})
+    public ResponseEntity<AdvertiseModel> advertise(@Valid @RequestBody final AdvertiseDTO advertiseDTO){
+        AdvertiseModel newAdvertise = petifyAdvertiseService.advertise(advertiseDTO);
         return new ResponseEntity<>(newAdvertise, HttpStatus.OK);
     }
 
@@ -66,19 +61,6 @@ public class AdvertisingPageController {
     public ResponseEntity<String> removeAdvert(@PathVariable final String id){
         petifyAdvertiseService.removeAdvertiseById(id);
         return new ResponseEntity<>("Advertise with id= " + id + " removed successfully.", HttpStatus.OK);
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.estu.petify.petifyfacades.builder;
+package com.estu.petify.petifyfacades.mailcontent.builder;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

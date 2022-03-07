@@ -1,13 +1,12 @@
 package com.estu.petify.petifycore.service.impl;
 
-import com.estu.petify.petifycore.model.user.UserModel;
-import com.estu.petify.petifycore.model.user.VerificationTokenModel;
+import com.estu.petify.petifycore.model.UserModel;
+import com.estu.petify.petifycore.model.VerificationTokenModel;
 import com.estu.petify.petifycore.repository.UserRepository;
 import com.estu.petify.petifycore.repository.VerificationTokenRepository;
 import com.estu.petify.petifycore.service.PetifyVerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 

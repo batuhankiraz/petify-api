@@ -1,6 +1,6 @@
 package com.estu.petify.petifycore.service.impl;
 
-import com.estu.petify.petifycore.model.user.UserModel;
+import com.estu.petify.petifycore.model.UserModel;
 import com.estu.petify.petifycore.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import static java.util.Collections.singletonList;
 
-@Service
+@Service("petifyUserDetailService")
 @AllArgsConstructor
 public class PetifyUserDetailService implements UserDetailsService {
 

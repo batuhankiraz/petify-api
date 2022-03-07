@@ -1,6 +1,6 @@
 package com.estu.petify.petifycore.repository;
 
-import com.estu.petify.petifycore.model.advertising.AdvertiseModel;
+import com.estu.petify.petifycore.model.AdvertiseModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
