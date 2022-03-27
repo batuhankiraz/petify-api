@@ -1,2 +1,7 @@
-# petify
- Petify Web Application
+# Petify - Backend
+ 
+ Petify Backend Server 
+ 
+ 
+ 
+ by batuhankiraz
