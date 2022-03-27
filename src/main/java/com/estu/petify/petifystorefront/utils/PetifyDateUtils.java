@@ -6,8 +6,8 @@ import java.util.Date;
 public class PetifyDateUtils {
 
     public static String getCurrentDateWithPattern(final String pattern){
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-        Date date = new Date();
+        final SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        final Date date = new Date();
         return formatter.format(date);
     }
 

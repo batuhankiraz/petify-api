@@ -12,9 +12,9 @@ public interface PetifyAdvertiseService {
 
     AdvertiseModel getAdvertDetail(final String id);
 
-    AdvertiseModel updateAdvertise(final AdvertiseDTO advertiseDTO, final AdvertiseModel advertiseModel);
+    AdvertiseModel updateAdvertise(final AdvertiseDTO advertiseDTO, final String id);
 
-    List<AdvertiseModel> getCurrentUserAdverts(final String username);
+    List<AdvertiseModel> getUserAdvertsByUsername(final String username);
 
     void removeAdvertiseById(final String id);
 }

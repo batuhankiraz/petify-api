@@ -1,7 +1,7 @@
 package com.estu.petify;
 
 import com.estu.petify.petifycore.service.PetifyConfigurationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,12 +12,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @SpringBootApplication
+@RequiredArgsConstructor
 public class PetifyApplication {
 
-	@Autowired
-	PetifyConfigurationService petifyConfigurationService;
-	@Autowired
-	private PasswordEncoder petifyPasswordEncoder;
+	private final PetifyConfigurationService petifyConfigurationService;
+	private final PasswordEncoder petifyPasswordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PetifyApplication.class, args);

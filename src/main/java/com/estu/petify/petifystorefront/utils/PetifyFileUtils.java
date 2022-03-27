@@ -1,16 +1,16 @@
 package com.estu.petify.petifystorefront.utils;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+@RequiredArgsConstructor
+@Slf4j
 public class PetifyFileUtils {
-
-    public PetifyFileUtils() {
-        // Empty Constructor.
-    }
 
     /**
      * compress the media bytes before storing it in the database
@@ -18,22 +18,23 @@ public class PetifyFileUtils {
      * @return Byte Array
      */
     public static byte[] compressBytes(byte[] data) {
-        Deflater deflater = new Deflater();
+        final Deflater deflater = new Deflater();
         deflater.setInput(data);
         deflater.finish();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        final byte[] buffer = new byte[1024];
         while (!deflater.finished()) {
-            int count = deflater.deflate(buffer);
+            final int count = deflater.deflate(buffer);
             outputStream.write(buffer, 0, count);
         }
         try {
             outputStream.close();
         } catch (IOException e) {
         }
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+        log.error("ERR: Compressed Image Byte Size - " + outputStream.toByteArray().length);
         return outputStream.toByteArray();
     }
+
 
     /**
      * uncompress the media bytes before returning it to the ui application
@@ -41,13 +42,13 @@ public class PetifyFileUtils {
      * @return Byte Array
      */
     public static byte[] decompressBytes(byte[] data) {
-        Inflater inflater = new Inflater();
+        final Inflater inflater = new Inflater();
         inflater.setInput(data);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        final byte[] buffer = new byte[1024];
         try {
             while (!inflater.finished()) {
-                int count = inflater.inflate(buffer);
+                final int count = inflater.inflate(buffer);
                 outputStream.write(buffer, 0, count);
             }
             outputStream.close();

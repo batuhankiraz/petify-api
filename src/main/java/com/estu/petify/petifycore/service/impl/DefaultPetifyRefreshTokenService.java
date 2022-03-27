@@ -5,6 +5,7 @@ import com.estu.petify.petifycore.repository.RefreshTokenRepository;
 import com.estu.petify.petifycore.service.PetifyRefreshTokenService;
 import io.jsonwebtoken.JwtException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Service("petifyRefreshTokenService")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 @Slf4j
 public class DefaultPetifyRefreshTokenService implements PetifyRefreshTokenService {

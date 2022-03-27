@@ -12,10 +12,10 @@ public interface PetifyAuthService {
 
     UserModel getCurrentUser();
 
-    UserModel getCurrentUserByRefreshToken(final String refreshToken);
+    UserModel getCurrentUserByToken(final String jwtToken);
 
     AuthenticationResponse refreshToken(final RefreshTokenDTO refreshTokenDTO);
 
-    void logout(final String refreshToken);
+    void logout(final RefreshTokenDTO refreshTokenDTO);
 
 }

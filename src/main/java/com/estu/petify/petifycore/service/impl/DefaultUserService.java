@@ -3,32 +3,33 @@ package com.estu.petify.petifycore.service.impl;
 import com.estu.petify.petifycore.events.UserRegisterMailEvent;
 import com.estu.petify.petifycore.model.VerificationTokenModel;
 import com.estu.petify.petifycore.repository.VerificationTokenRepository;
-import com.estu.petify.petifycore.service.PetifyAuthService;
 import com.estu.petify.petifycore.service.PetifyMailService;
-import com.estu.petify.petifyfacades.dto.UserDTO;
+import com.estu.petify.petifyfacades.dto.RegisterDTO;
 import com.estu.petify.petifycore.model.UserModel;
 import com.estu.petify.petifycore.repository.UserRepository;
 import com.estu.petify.petifycore.service.UserService;
+import com.estu.petify.petifyfacades.dto.UpdateProfileDTO;
 import com.estu.petify.petifystorefront.utils.PetifyDateUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class DefaultUserService implements UserService {
 
-    private static final String DD_MM_YYYY = "dd/MM/yyyy HH:mm:ss";
+    private static final String DD_MM_YYYY = "dd/MM/yyyy HH:mm";
     private static final String ACCOUNT_ACTIVATION_REQUEST_HEADER = "http://localhost:8080/api/v1/register/account-verification/?verificationToken=";
 
     private final UserRepository userRepository;
     private final PasswordEncoder petifyPasswordEncoder;
-    private final PetifyAuthService petifyAuthService;
     private final VerificationTokenRepository verificationTokenRepository;
     private final PetifyMailService petifyMailService;
 
@@ -39,7 +40,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserModel register(final UserDTO newUser){
+    public UserModel register(final RegisterDTO newUser){
         final UserModel userModel = new UserModel();
         try{
             userModel.setUsername(newUser.getEMail());
@@ -67,27 +68,58 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserModel updateProfile(final UserDTO userDTO){
+    public UserModel updateProfile(final UpdateProfileDTO updateProfileDTO){
 
-        final UserModel userModel = petifyAuthService.getCurrentUser();
+        final String token = updateProfileDTO.getToken();
+        final String email = updateProfileDTO.getEMail();
+        final String firstName = updateProfileDTO.getFirstName();
+        final String lastName = updateProfileDTO.getLastName();
+        final String phoneNumber = updateProfileDTO.getPhoneNumber();
+        final String birthDate = updateProfileDTO.getBirthDate();
+        final String gender = updateProfileDTO.getGender();
+        final String address = updateProfileDTO.getAddress();
+        final String image = updateProfileDTO.getImage();
+
+        final UserModel userByToken = StringUtils.hasText(token) ? userRepository.findByToken(token).orElseThrow() : null;
 
         try{
-            userModel.setUsername(userDTO.getEMail());
-            userModel.setFirstName(userDTO.getFirstName());
-            userModel.setLastName(userDTO.getLastName());
-            userModel.setPhoneNumber(userDTO.getPhoneNumber());
-            userModel.setBirthDate(userDTO.getBirthDate());
-            userModel.setEMail(userDTO.getEMail());
-            userModel.setGender(userDTO.getGender());
-            userModel.setAddress(userDTO.getAddress());
-            userModel.setImage(userDTO.getImage());
-            userRepository.save(userModel);
+            if (Objects.nonNull(userByToken)){
+                if (StringUtils.hasText(email)){
+                    userByToken.setUsername(email);
+                    userByToken.setEMail(email);
+                }
+                if (StringUtils.hasText(firstName)){
+                    userByToken.setFirstName(firstName);
+                }
+                if (StringUtils.hasText(lastName)){
+                    userByToken.setLastName(lastName);
+                }
+                if (StringUtils.hasText(phoneNumber)){
+                    userByToken.setPhoneNumber(phoneNumber);
+                }
+                if (StringUtils.hasText(birthDate)){
+                    userByToken.setBirthDate(birthDate);
+                }
+                if (StringUtils.hasText(gender)){
+                    userByToken.setGender(gender);
+                }
+                if (StringUtils.hasText(address)){
+                    userByToken.setAddress(address);
+                }
+                if (StringUtils.hasText(image)){
+                    userByToken.setImage(image);
+                }
+
+                userRepository.save(userByToken);
+            }
         }
         catch (Exception e){
-            log.error("ERR: Unable to update user informations, [ {} ]", userDTO.getEMail());
+            if (Objects.nonNull(userByToken) && StringUtils.hasText(token)){
+                log.error("ERR: Unable to update {} information's with JWT Token: {}", userByToken.getUsername(), token);
+            }
         }
 
-        return userModel;
+        return userByToken;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.estu.petify.petifycore.model.UserModel;
 import com.estu.petify.petifycore.service.UserService;
 import com.estu.petify.petifystorefront.controllers.CustomAbstractController;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class UsersController extends CustomAbstractController {
 

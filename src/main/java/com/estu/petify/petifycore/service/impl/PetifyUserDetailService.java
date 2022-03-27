@@ -3,6 +3,7 @@ package com.estu.petify.petifycore.service.impl;
 import com.estu.petify.petifycore.model.UserModel;
 import com.estu.petify.petifycore.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,7 +16,7 @@ import java.util.Collection;
 import static java.util.Collections.singletonList;
 
 @Service("petifyUserDetailService")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PetifyUserDetailService implements UserDetailsService {
 
     private static final String USER_AUTHORITY = "USER";

@@ -9,7 +9,7 @@ import com.estu.petify.petifycore.service.PetifyRefreshTokenService;
 import com.estu.petify.petifyfacades.dto.LoginDTO;
 import com.estu.petify.petifyfacades.dto.RefreshTokenDTO;
 import com.estu.petify.petifyfacades.dto.response.AuthenticationResponse;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,8 +24,8 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Service("petifyAuthService")
-@AllArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 @Slf4j
 public class DefaultPetifyAuthService implements PetifyAuthService {
 
@@ -40,15 +40,19 @@ public class DefaultPetifyAuthService implements PetifyAuthService {
         final Authentication authentication = authenticationManagerBean.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
         final SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
+
         final String jwtToken = jwtProvider.generateJwtToken(securityContext);
         final String refreshToken = petifyRefreshTokenService.generateRefreshToken().getToken();
+
         final UserModel user = Objects.nonNull(authentication) ? userRepository.findByUsername(loginDTO.getUsername()).orElseThrow() : null ;
+
         try{
             if (Objects.nonNull(user) && StringUtils.hasText(refreshToken)){
-                user.setToken(refreshToken);
+                user.setToken(jwtToken);
                 userRepository.save(user);
             }
-        } catch (Exception e){
+        }
+        catch (final Exception e){
             log.warn("WARN: Couldn't update user: {} with refresh token: {}", user.getUsername(), refreshToken);
         }
 
@@ -70,9 +74,9 @@ public class DefaultPetifyAuthService implements PetifyAuthService {
     }
 
     @Override
-    public UserModel getCurrentUserByRefreshToken(final String refreshToken) {
+    public UserModel getCurrentUserByToken(final String jwtToken) {
 
-        final UserModel userByToken = userRepository.findByToken(refreshToken).orElseThrow();
+        final UserModel userByToken = userRepository.findByToken(jwtToken).orElseThrow();
 
         return userByToken;
     }
@@ -85,7 +89,8 @@ public class DefaultPetifyAuthService implements PetifyAuthService {
 
         try {
             jwtToken = jwtProvider.generateJwtTokenWithUsername(refreshTokenDTO.getUsername());
-        } catch (PetifyJwtException e) {
+        }
+        catch (final PetifyJwtException e) {
             log.warn("WARN: Couldn't generate Jwt Token: {} for Username: {}", jwtToken, refreshTokenDTO.getUsername());
         }
 
@@ -98,18 +103,23 @@ public class DefaultPetifyAuthService implements PetifyAuthService {
     }
 
     @Override
-    public void logout(final String refreshToken) {
+    public void logout(final RefreshTokenDTO refreshTokenDTO) {
 
-        final UserModel userByRefreshToken = userRepository.findByToken(refreshToken).orElseThrow();
+        final String username = refreshTokenDTO.getUsername();
+        final String refreshToken = refreshTokenDTO.getRefreshToken();
+        final UserModel user = StringUtils.hasText(username) ? userRepository.findByUsername(username).orElseThrow() : null;
         try {
             petifyRefreshTokenService.deleteRefreshToken(refreshToken);
 
-            userByRefreshToken.setToken("");
-            userRepository.save(userByRefreshToken);
+            if (Objects.nonNull(user)){
+                user.setToken("");
+                userRepository.save(user);
+            }
         }
-        catch (Exception e){
-            log.warn("WARN: Couldn't remove token from user or refresh token in database. Refresh_Token: {}, Username: {}", refreshToken, userByRefreshToken.getUsername());
+        catch (final Exception e){
+            log.warn("ERR: Couldn't remove token from user or refresh token in database. Refresh Token: {}, Username: {}", refreshToken, username);
         }
     }
 
 }
+

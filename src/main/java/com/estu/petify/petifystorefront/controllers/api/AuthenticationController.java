@@ -8,17 +8,20 @@ import com.estu.petify.petifyfacades.dto.RefreshTokenDTO;
 import com.estu.petify.petifyfacades.dto.response.AuthenticationResponse;
 import com.estu.petify.petifystorefront.controllers.CustomAbstractController;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class AuthenticationController extends CustomAbstractController {
 
@@ -39,17 +42,17 @@ public class AuthenticationController extends CustomAbstractController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestBody final RefreshTokenDTO refreshTokenDTO) {
 
-        petifyAuthService.logout(refreshTokenDTO.getRefreshToken());
+        petifyAuthService.logout(refreshTokenDTO);
 
         return new ResponseEntity<>("Refresh Token deleted. || Logged Out Successfully.", HttpStatus.OK);
     }
 
     @GetMapping("/current-user")
-    public ResponseEntity<UserModel> getCurrentUserByJwtToken(@RequestParam final String refreshToken){
+    public ResponseEntity<UserModel> getCurrentUserByJwtToken(@RequestParam final String jwtToken){
 
-        final UserModel currentUserByRefreshToken = StringUtils.hasText(refreshToken) ? petifyAuthService.getCurrentUserByRefreshToken(refreshToken) : null;
+        final UserModel currentUserByToken = StringUtils.hasText(jwtToken) ? petifyAuthService.getCurrentUserByToken(jwtToken) : null;
 
-        return Objects.nonNull(currentUserByRefreshToken) ? new ResponseEntity<>(currentUserByRefreshToken, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return Objects.nonNull(currentUserByToken) ? new ResponseEntity<>(currentUserByToken, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

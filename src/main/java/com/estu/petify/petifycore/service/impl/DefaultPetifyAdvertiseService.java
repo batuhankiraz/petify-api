@@ -10,6 +10,7 @@ import com.estu.petify.petifystorefront.utils.PetifyDateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -55,7 +56,9 @@ public class DefaultPetifyAdvertiseService implements PetifyAdvertiseService {
     }
 
     @Override
-    public AdvertiseModel updateAdvertise(final AdvertiseDTO advertiseDTO, final AdvertiseModel advertiseModel) {
+    public AdvertiseModel updateAdvertise(final AdvertiseDTO advertiseDTO, final String id) {
+
+        final AdvertiseModel advertiseModel = petifyAdveritiseRepository.findById(id).orElseThrow();
         advertiseModel.setTitle(advertiseDTO.getTitle());
         advertiseModel.setType(advertiseDTO.getType());
         advertiseModel.setDescription(advertiseDTO.getDescription());
@@ -69,8 +72,12 @@ public class DefaultPetifyAdvertiseService implements PetifyAdvertiseService {
     }
 
     @Override
-    public List<AdvertiseModel> getCurrentUserAdverts(String username) {
-        return petifyAdveritiseRepository.findAdvertiseModelByUsername(username);
+    public List<AdvertiseModel> getUserAdvertsByUsername(String username) {
+
+        if (StringUtils.hasText(username)){
+            return petifyAdveritiseRepository.findAdvertiseModelByUsername(username);
+        }
+        return Collections.emptyList();
     }
 
     @Transactional

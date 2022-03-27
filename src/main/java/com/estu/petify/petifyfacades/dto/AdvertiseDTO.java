@@ -1,14 +1,13 @@
 package com.estu.petify.petifyfacades.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class AdvertiseDTO implements Serializable {
 
     @NotBlank(message = "Advertise Title is mandatory.")

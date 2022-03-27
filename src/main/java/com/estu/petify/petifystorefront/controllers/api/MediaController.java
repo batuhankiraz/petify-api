@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.estu.petify.petifycore.model.MediaModel;
 import com.estu.petify.petifycore.repository.MediaRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import static com.estu.petify.petifystorefront.utils.PetifyFileUtils.decompressB
 
 @RestController
 @RequestMapping("/api/v1/medias")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class MediaController {
 

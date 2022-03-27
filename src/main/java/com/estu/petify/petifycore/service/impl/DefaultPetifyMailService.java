@@ -5,6 +5,7 @@ import com.estu.petify.petifycore.exceptions.PetifySendMailException;
 import com.estu.petify.petifycore.service.PetifyMailService;
 import com.estu.petify.petifyfacades.mailcontent.builder.MailContentBuilder;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,7 +15,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service("petifyMailService")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class DefaultPetifyMailService implements PetifyMailService {
 
