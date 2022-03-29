@@ -20,10 +20,7 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
     @Query("select u from UserModel u where u.eMail=:email")
     List<UserModel> findUserModelByEMail(final String email);
 
-    @Transactional
-    @Modifying
-    @Query("delete from UserModel user where user.id=:id")
-    void deleteUserModelById(@Param("id") final String id);
+    void deleteByUsername(final String username);
 
     Optional<UserModel> findByToken(final String jwtToken);
 

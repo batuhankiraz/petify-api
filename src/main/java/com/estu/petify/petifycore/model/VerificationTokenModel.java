@@ -24,8 +24,8 @@ public class VerificationTokenModel {
     @Column(name = "token")
     private String token;
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    private UserModel user;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "expiryDate")
     private Instant expiryDate;

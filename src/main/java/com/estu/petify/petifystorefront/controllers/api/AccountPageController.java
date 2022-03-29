@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -41,15 +40,14 @@ public class AccountPageController extends CustomAbstractController {
         return new ResponseEntity<>(adverts, HttpStatus.OK);
     }
 
-    @DeleteMapping("/remove")
-    public void deleteAccount(){
+    @DeleteMapping("/remove-account")
+    public void deleteAccount(@RequestParam final String username){
 
-        final UserModel currentUser = petifyAuthService.getCurrentUser();
         try {
-            defaultUserService.deleteUserById(currentUser.getId());
+            defaultUserService.deleteByUsername(username);
         }
-        catch (Exception e){
-            log.error("ERR: Cause: {}" + e.getCause().getMessage());
+        catch (final Exception e){
+            log.error("ERR: While removing {}'s account. [Cause: {}]", username,  e.getCause().getMessage());
         }
     }
 

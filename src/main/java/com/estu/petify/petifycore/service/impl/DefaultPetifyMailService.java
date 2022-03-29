@@ -4,7 +4,6 @@ import com.estu.petify.petifycore.events.UserRegisterMailEvent;
 import com.estu.petify.petifycore.exceptions.PetifySendMailException;
 import com.estu.petify.petifycore.service.PetifyMailService;
 import com.estu.petify.petifyfacades.mailcontent.builder.MailContentBuilder;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
@@ -24,10 +23,11 @@ public class DefaultPetifyMailService implements PetifyMailService {
 
     @Async
     @Override
-    public void sendUserRegisterMail(UserRegisterMailEvent userRegisterMailEvent) {
-        MimeMessagePreparator messagePreparator = mimeMessage -> {
+    public void sendUserRegisterMail(final UserRegisterMailEvent userRegisterMailEvent) {
+        final MimeMessagePreparator messagePreparator = mimeMessage -> {
 
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            final MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+
             messageHelper.setFrom("noreply@petify.com");
             messageHelper.setTo(userRegisterMailEvent.getUser());
             messageHelper.setSubject(userRegisterMailEvent.getSubject());
@@ -36,10 +36,11 @@ public class DefaultPetifyMailService implements PetifyMailService {
 
         try{
             mailSender.send(messagePreparator);
-            log.info("Mail has been successfully send to " + userRegisterMailEvent.getUser());
+            log.info("INFO: Mail has been successfully send to " + userRegisterMailEvent.getUser());
         }
-        catch (MailException e){
-            throw new PetifySendMailException("Exception occurred when sending the mail to " + userRegisterMailEvent.getUser());
+        catch (final MailException e){
+            throw new PetifySendMailException("Couldn't send" +
+                    " Account Verification Mail to " + userRegisterMailEvent.getUser());
         }
     }
 

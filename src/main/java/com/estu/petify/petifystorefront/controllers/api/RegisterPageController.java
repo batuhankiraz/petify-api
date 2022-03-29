@@ -24,19 +24,19 @@ public class RegisterPageController extends CustomAbstractController {
     private final PetifyVerificationService petifyVerificationService;
 
 
-    @PostMapping(consumes = {"application/json"})
+    @PostMapping()
     public ResponseEntity<UserModel> register(@Valid @RequestBody final RegisterDTO registerDTO){
-        UserModel newUser = defaultUserService.register(registerDTO);
+        final UserModel newUser = defaultUserService.register(registerDTO);
         log.info("INFO: Successfully created Petify user for {}.", newUser.getUsername());
         return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
     @Transactional
-    @GetMapping("/account-verification/")
-    public ResponseEntity<String> verifyAccount(@RequestParam final String verificationToken) throws Exception {
-        petifyVerificationService.verifyAccount(verificationToken);
-        log.info("INFO: Account activated successfully for [ verification_token: {} ]", verificationToken);
-        return new ResponseEntity<>("Account activated successfully.", HttpStatus.OK);
+    @PostMapping("/account-verification")
+    public ResponseEntity<Boolean> verifyAccount(@RequestBody final String verificationToken) throws Exception {
+        Boolean activeAccount = petifyVerificationService.verifyAccount(verificationToken);
+        log.info("INFO: Account activated successfully for [ verification token: {} ]", verificationToken);
+        return new ResponseEntity<>(activeAccount, HttpStatus.OK);
     }
 
 }

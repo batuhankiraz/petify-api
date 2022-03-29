@@ -14,7 +14,7 @@ public interface UserService {
 
     UserModel updateProfile(final UpdateProfileDTO updateProfileDTO);
 
-    void deleteUserById(final String id);
+    void deleteByUsername(final String username);
 
     List<UserModel> getUserByEmail(final String email);
 }

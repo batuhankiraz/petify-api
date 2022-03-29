@@ -41,27 +41,28 @@ public class DefaultUserService implements UserService {
 
     @Override
     public UserModel register(final RegisterDTO newUser){
+
         final UserModel userModel = new UserModel();
+
         try{
-            userModel.setUsername(newUser.getEMail());
+            userModel.setUsername(newUser.getEmail());
             userModel.setPassword(petifyPasswordEncoder.encode(newUser.getPassword()));
             userModel.setFirstName(newUser.getFirstName());
             userModel.setLastName(newUser.getLastName());
             userModel.setPhoneNumber(newUser.getPhoneNumber());
             userModel.setBirthDate(newUser.getBirthDate());
-            userModel.setEMail(newUser.getEMail());
+            userModel.setEMail(newUser.getEmail());
             userModel.setGender(newUser.getGender());
             userModel.setAddress(newUser.getAddress());
             userModel.setCreationTime(PetifyDateUtils.getCurrentDateWithPattern(DD_MM_YYYY));
-            userModel.setImage(newUser.getImage());
             userModel.setActivated(Boolean.FALSE);
 
-            generateAndSendUserRegistrationMail(userModel);
+            generateAndSendUserRegistrationMail(userModel.getUsername());
 
             userRepository.save(userModel);
 
-        } catch (Exception e){
-            log.error("ERR: Unable to create new user, [ {} ]", newUser.getEMail());
+        } catch (final Exception e){
+            log.error("ERR: Unable to create new user, [ {} ]", newUser.getEmail());
         }
 
         return userModel;
@@ -113,7 +114,7 @@ public class DefaultUserService implements UserService {
                 userRepository.save(userByToken);
             }
         }
-        catch (Exception e){
+        catch (final Exception e){
             if (Objects.nonNull(userByToken) && StringUtils.hasText(token)){
                 log.error("ERR: Unable to update {} information's with JWT Token: {}", userByToken.getUsername(), token);
             }
@@ -123,13 +124,13 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public void deleteUserById(final String id){
+    public void deleteByUsername(final String username){
 
         try{
-            verificationTokenRepository.deleteVerificationTokenModelByUserId(id);
-            userRepository.deleteUserModelById(id);
+            verificationTokenRepository.deleteByUsername(username);
+            userRepository.deleteByUsername(username);
         }
-        catch (Exception e){
+        catch (final Exception e){
             log.error("ERR: Unable to delete user !");
         }
     }
@@ -140,27 +141,30 @@ public class DefaultUserService implements UserService {
         return userRepository.findUserModelByEMail(email);
     }
 
-    private void generateAndSendUserRegistrationMail(final UserModel userModel){
-        final String verificationToken = generateVerificationToken(userModel);
+    private void generateAndSendUserRegistrationMail(final String username){
+        final String verificationToken = generateVerificationToken(username);
 
         UserRegisterMailEvent userRegisterMailEvent = new UserRegisterMailEvent();
-        userRegisterMailEvent.setSubject("Please Activate Your Petify Account");
-        userRegisterMailEvent.setUser(userModel.getEMail());
-        userRegisterMailEvent.setMessage("Thank You for sign-in up to Petify, "
-                + "Please click on the below link to activate your account: "
-                + ACCOUNT_ACTIVATION_REQUEST_HEADER
-                + verificationToken);
+        userRegisterMailEvent.setSubject("Please Activate Your Account");
+        userRegisterMailEvent.setUser(username);
+        userRegisterMailEvent.setMessage("\n <h6> Thank you for being a member to Petify, </h6>"
+                + "\n <h5> Your verification token: </h5>"
+                + "\n <h4><b>" + verificationToken + "</b></h4>"
+                + "\n"
+                + "\n"
+                + "\n Kind Regards,"
+                + "\n Petify Team");
 
         petifyMailService.sendUserRegisterMail(userRegisterMailEvent);
     }
 
-    private String generateVerificationToken(final UserModel userModel){
+    private String generateVerificationToken(final String username){
 
-        final String verificationToken = UUID.randomUUID().toString();
+        final String verificationToken = UUID.randomUUID().toString().substring(0, 6);
 
-        VerificationTokenModel verificationTokenModel = new VerificationTokenModel();
+        final VerificationTokenModel verificationTokenModel = new VerificationTokenModel();
         verificationTokenModel.setToken(verificationToken);
-        verificationTokenModel.setUser(userModel);
+        verificationTokenModel.setUsername(username);
 
         verificationTokenRepository.save(verificationTokenModel);
 
