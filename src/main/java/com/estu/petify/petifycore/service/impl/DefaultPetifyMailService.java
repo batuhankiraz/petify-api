@@ -3,7 +3,7 @@ package com.estu.petify.petifycore.service.impl;
 import com.estu.petify.petifycore.events.UserRegisterMailEvent;
 import com.estu.petify.petifycore.exceptions.PetifySendMailException;
 import com.estu.petify.petifycore.service.PetifyMailService;
-import com.estu.petify.petifyfacades.mailcontent.builder.MailContentBuilder;
+import com.estu.petify.petifyfacades.mail.content.builder.MailContentBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;

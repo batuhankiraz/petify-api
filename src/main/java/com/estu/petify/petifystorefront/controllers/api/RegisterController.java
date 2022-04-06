@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/register")
 @RequiredArgsConstructor
 @Slf4j
-public class RegisterPageController extends CustomAbstractController {
+public class RegisterController extends CustomAbstractController {
 
     private final UserService defaultUserService;
     private final PetifyVerificationService petifyVerificationService;

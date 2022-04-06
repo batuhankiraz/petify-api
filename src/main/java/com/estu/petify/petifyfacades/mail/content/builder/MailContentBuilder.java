@@ -1,4 +1,4 @@
-package com.estu.petify.petifyfacades.mailcontent.builder;
+package com.estu.petify.petifyfacades.mail.content.builder;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;

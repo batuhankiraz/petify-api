@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/api/v1/my-account")
 @RequiredArgsConstructor
 @Slf4j
-public class AccountPageController extends CustomAbstractController {
+public class AccountController extends CustomAbstractController {
 
     private final UserService defaultUserService;
     private final PetifyAuthService petifyAuthService;

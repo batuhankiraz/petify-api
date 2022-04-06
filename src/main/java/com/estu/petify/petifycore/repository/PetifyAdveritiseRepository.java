@@ -17,7 +17,7 @@ public interface PetifyAdveritiseRepository extends JpaRepository<AdvertiseModel
 
     @Transactional
     @Modifying
-    @Query("select a from AdvertiseModel a where a.advertiserName=:username")
+    @Query("select a from AdvertiseModel a where a.username=:username")
     List<AdvertiseModel> findAdvertiseModelByUsername(final String username);
 
     void deleteById(final String id);

@@ -26,7 +26,6 @@ import java.util.UUID;
 public class DefaultUserService implements UserService {
 
     private static final String DD_MM_YYYY = "dd/MM/yyyy HH:mm";
-    private static final String ACCOUNT_ACTIVATION_REQUEST_HEADER = "http://localhost:8080/api/v1/register/account-verification/?verificationToken=";
 
     private final UserRepository userRepository;
     private final PasswordEncoder petifyPasswordEncoder;

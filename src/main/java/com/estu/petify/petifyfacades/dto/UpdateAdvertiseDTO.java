@@ -8,11 +8,9 @@ import java.util.List;
 
 @Data
 @RequiredArgsConstructor
-public class AdvertiseDTO implements Serializable {
+public class UpdateAdvertiseDTO implements Serializable {
 
     private String id;
-
-    private String token;
 
     @NotBlank(message = "Title is mandatory.")
     private String title;

@@ -1,12 +1,10 @@
 package com.estu.petify.petifyfacades.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class UpdateProfileDTO {
 
     private String password;

@@ -1,11 +1,11 @@
 package com.estu.petify.petifycore.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,42 +20,42 @@ public class AdvertiseModel {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
+    @Column(name = "creationTime")
+    private Instant creationTime;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "title")
     private String title;
 
-    @Column(name = "type")
-    private String type;
-
-    @Column(name = "advertiserName")
-    private String advertiserName;
-
-    @Column(name = "advertiserMail")
-    private String advertiserMail;
-
-    @Column(name = "advertiserPhoneNumber")
-    private String advertiserPhoneNumber;
-
-    @Column(name = "creationTime")
-    private String creationTime;
-
+    @Column(name = "description")
     @Lob
-    @Column(name = "advertiseDesc")
     private String description;
 
-    @Column(name = "petName")
-    private String petName;
+    @Column(name = "price")
+    private BigDecimal price;
 
-    @Column(name = "petFamily")
-    private String petFamily;
+    @Column(name = "country")
+    private String country;
 
-    @Column(name = "petGender")
-    private String petGender;
+    @Column(name = "city")
+    private String city;
 
-    @Column(name = "petColor")
-    private String petColor;
+    @Column(name = "town")
+    private String town;
 
-    @Lob
-    @Column(name = "petDesc")
-    private String petDesc;
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "petPreferences")
+    @ElementCollection
+    private List<String> petPreferencesList;
 
 }
