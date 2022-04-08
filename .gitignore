@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 ### Sevsitive Data ###
-src/main/resources/application.properties
+src/main/resources/local-cloud.properties
 
 
 ### STS ###
