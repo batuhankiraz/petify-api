@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import static com.estu.petify.petifystorefront.utils.PetifyFileUtils.compressBytes;
 import static com.estu.petify.petifystorefront.utils.PetifyFileUtils.decompressBytes;
 
@@ -50,7 +51,7 @@ public class MediaController {
         return media;
     }
 
-    protected String formatMediaName(final String fileName){
+    protected String formatMediaName(final String fileName) {
 
         final String formattedMediaName = fileName
                 .replace(".jpeg", "")

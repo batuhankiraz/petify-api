@@ -2,6 +2,7 @@ package com.estu.petify.petifystorefront.utils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.DataFormatException;
@@ -14,6 +15,7 @@ public class PetifyFileUtils {
 
     /**
      * compress the media bytes before storing it in the database
+     *
      * @param data
      * @return Byte Array
      */
@@ -38,6 +40,7 @@ public class PetifyFileUtils {
 
     /**
      * uncompress the media bytes before returning it to the ui application
+     *
      * @param data
      * @return Byte Array
      */

@@ -23,15 +23,14 @@ public class UsersController extends CustomAbstractController {
     private final UserService defaultUserService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserModel>> getUsers(){
-        try{
+    public ResponseEntity<List<UserModel>> getUsers() {
+        try {
             final List<UserModel> userModels = defaultUserService.getUsers();
-            if (CollectionUtils.isEmpty(userModels)){
+            if (CollectionUtils.isEmpty(userModels)) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(userModels, HttpStatus.OK);
-        }
-        catch (Exception exception){
+        } catch (Exception exception) {
             log.error("ERR: Unexpected error occurred while trying to getting all users. Cause: {}", exception.getCause().getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

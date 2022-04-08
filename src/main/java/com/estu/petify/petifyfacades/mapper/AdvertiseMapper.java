@@ -33,7 +33,6 @@ public interface AdvertiseMapper {
     AdvertiseModel mapToModel(final AdvertiseDTO advertiseDTO, final UserModel user);
 
 
-
     @Mapping(target = "id", source = "advertiseModel.id")
     @Mapping(target = "title", source = "advertiseModel.title")
     @Mapping(target = "description", source = "advertiseModel.description")
@@ -45,18 +44,13 @@ public interface AdvertiseMapper {
     AdvertiseDTO mapToDto(final AdvertiseModel advertiseModel);
 
 
-
     @Named("petPreferences")
     default List<String> mapToPetPreferencesList(final String petPreferences) {
 
-        petPreferences.replace(" ", ",")
-                      .replace("-", ",")
-                      .replace("/", ",")
-                      .replace("|", ",")
-                      .replace(" - ", ",")
-                      .replace(" / ", ",")
-                      .replace(" | ", ",")
-                      .replace(" || ", ",");
+        petPreferences.replaceAll(" ", ",")
+                .replaceAll("-", ",")
+                .replaceAll("/", ",")
+                .replaceAll("|", ",");
 
         return StringUtils.isNotBlank(petPreferences) ? Arrays.asList(petPreferences.split(",")) : Collections.emptyList();
     }

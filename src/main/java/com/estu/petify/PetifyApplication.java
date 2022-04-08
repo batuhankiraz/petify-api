@@ -1,10 +1,13 @@
 package com.estu.petify;
 
+import com.estu.petify.petifycore.config.swagger.SwaggerConfiguration;
 import com.estu.petify.petifycore.service.PetifyConfigurationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -12,6 +15,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @SpringBootApplication
+@EnableAsync
+@Import(SwaggerConfiguration.class)
 @RequiredArgsConstructor
 public class PetifyApplication {
 

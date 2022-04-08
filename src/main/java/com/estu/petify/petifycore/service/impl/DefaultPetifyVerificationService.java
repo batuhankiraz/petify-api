@@ -24,14 +24,13 @@ public class DefaultPetifyVerificationService implements PetifyVerificationServi
     public Boolean verifyAccount(final String token) throws Exception {
 
         final Optional<VerificationTokenModel> verificationTokenModel = Optional.ofNullable(verificationTokenRepository.findByToken(token)
-                                                                        .orElseThrow(() -> new Exception("Invalid Verification Token for Account Activation.")));
+                .orElseThrow(() -> new Exception("Invalid Verification Token for Account Activation.")));
 
-        if (verificationTokenModel.isPresent()){
+        if (verificationTokenModel.isPresent()) {
             try {
 
                 return fetchUserAndActivateAccount(verificationTokenModel.get());
-            }
-            catch (final Exception e){
+            } catch (final Exception e) {
                 log.error("ERR: Couldn't fetch User and Verification Token for account activation. || Cause: {}", e.getCause().getMessage());
             }
         }
@@ -43,7 +42,7 @@ public class DefaultPetifyVerificationService implements PetifyVerificationServi
         final String username = verificationTokenModel.getUsername();
 
         final UserModel userModel = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User doesn't exist in database for Account Activation."));
-        if (Objects.nonNull(userModel)){
+        if (Objects.nonNull(userModel)) {
             userModel.setActivated(Boolean.TRUE);
 
             userRepository.save(userModel);

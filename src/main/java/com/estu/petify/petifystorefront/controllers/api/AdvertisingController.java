@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +26,7 @@ public class AdvertisingController extends CustomAbstractController {
 
 
     @GetMapping("all")
-    public ResponseEntity<List<AdvertiseModel>> getAllAdverts(){
+    public ResponseEntity<List<AdvertiseModel>> getAllAdverts() {
 
         final List<AdvertiseModel> adverts = petifyAdvertiseService.getAllAdverts();
 
@@ -34,7 +35,7 @@ public class AdvertisingController extends CustomAbstractController {
 
 
     @PostMapping("/add-advertise")
-    public ResponseEntity<AdvertiseModel> advertise(@Valid @RequestBody final AdvertiseDTO advertiseDTO){
+    public ResponseEntity<AdvertiseModel> advertise(@Valid @RequestBody final AdvertiseDTO advertiseDTO) {
 
         final AdvertiseModel newAdvertise = petifyAdvertiseService.advertise(advertiseDTO);
 
@@ -43,10 +44,10 @@ public class AdvertisingController extends CustomAbstractController {
 
 
     @GetMapping("/detail")
-    public ResponseEntity<AdvertiseModel> advertiseDetail(@RequestParam final String id){
+    public ResponseEntity<AdvertiseModel> advertiseDetail(@RequestParam final String id) {
 
         final AdvertiseModel advert = petifyAdvertiseService.getAdvertDetail(id);
-        if (Objects.isNull(advert)){
+        if (Objects.isNull(advert)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
@@ -55,7 +56,7 @@ public class AdvertisingController extends CustomAbstractController {
 
 
     @PostMapping(value = "/update-advertise")
-    public ResponseEntity<AdvertiseModel> updateAdvertise(@Valid @RequestBody final UpdateAdvertiseDTO updateAdvertiseDTO){
+    public ResponseEntity<AdvertiseModel> updateAdvertise(@Valid @RequestBody final UpdateAdvertiseDTO updateAdvertiseDTO) {
 
         final AdvertiseModel updatedAdvertise = petifyAdvertiseService.updateAdvertise(updateAdvertiseDTO);
 
@@ -64,7 +65,7 @@ public class AdvertisingController extends CustomAbstractController {
 
 
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeAdvertise(@RequestParam final String id){
+    public ResponseEntity<String> removeAdvertise(@RequestParam final String id) {
 
         petifyAdvertiseService.removeAdvertiseById(id);
 

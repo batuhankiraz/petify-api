@@ -34,11 +34,10 @@ public class DefaultPetifyMailService implements PetifyMailService {
             messageHelper.setText(mailContentBuilder.buildUserRegisterMail(userRegisterMailEvent.getMessage(), userRegisterMailEvent.getUser()));
         };
 
-        try{
+        try {
             mailSender.send(messagePreparator);
             log.info("INFO: Mail has been successfully send to " + userRegisterMailEvent.getUser());
-        }
-        catch (final MailException e){
+        } catch (final MailException e) {
             throw new PetifySendMailException("Couldn't send" +
                     " Account Verification Mail to " + userRegisterMailEvent.getUser());
         }

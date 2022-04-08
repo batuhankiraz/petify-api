@@ -2,6 +2,7 @@ package com.estu.petify.petifycore.model;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -16,8 +17,8 @@ import java.util.List;
 public class AdvertiseModel {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
     @Column(name = "creationTime")

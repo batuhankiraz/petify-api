@@ -61,7 +61,7 @@ public class DefaultPetifyAdvertiseService implements PetifyAdvertiseService {
         final String id = updateAdvertiseDTO.getId();
         final String title = updateAdvertiseDTO.getTitle();
         final String description = updateAdvertiseDTO.getDescription();
-        final String price =updateAdvertiseDTO.getPrice();
+        final String price = updateAdvertiseDTO.getPrice();
         final String country = updateAdvertiseDTO.getCountry();
         final String city = updateAdvertiseDTO.getCity();
         final String town = updateAdvertiseDTO.getTown();
@@ -70,31 +70,30 @@ public class DefaultPetifyAdvertiseService implements PetifyAdvertiseService {
         final AdvertiseModel advertiseModel = petifyAdveritiseRepository.findById(id).orElseThrow();
 
         try {
-            if (StringUtils.hasText(title)){
+            if (StringUtils.hasText(title)) {
                 advertiseModel.setTitle(title);
             }
-            if (StringUtils.hasText(description)){
+            if (StringUtils.hasText(description)) {
                 advertiseModel.setDescription(description);
             }
-            if (StringUtils.hasText(price)){
+            if (StringUtils.hasText(price)) {
                 advertiseModel.setPrice(BigDecimal.valueOf(Double.parseDouble(price)));
             }
-            if (StringUtils.hasText(country)){
+            if (StringUtils.hasText(country)) {
                 advertiseModel.setCountry(country);
             }
-            if (StringUtils.hasText(city)){
+            if (StringUtils.hasText(city)) {
                 advertiseModel.setCity(city);
             }
-            if (StringUtils.hasText(town)){
+            if (StringUtils.hasText(town)) {
                 advertiseModel.setTown(town);
             }
-            if (StringUtils.hasText(petPreferences)){
+            if (StringUtils.hasText(petPreferences)) {
                 advertiseModel.setPetPreferencesList(createPetPreferencesList(petPreferences));
             }
 
             petifyAdveritiseRepository.save(advertiseModel);
-        }
-        catch (final Exception e){
+        } catch (final Exception e) {
             log.error("ERR: Unable to update Advertise with id: {}. | Cause{}", id, e.getCause().getMessage());
         }
 
@@ -105,7 +104,7 @@ public class DefaultPetifyAdvertiseService implements PetifyAdvertiseService {
     @Override
     public List<AdvertiseModel> getUserAdvertsByUsername(final String username) {
 
-        if (StringUtils.hasText(username)){
+        if (StringUtils.hasText(username)) {
             return petifyAdveritiseRepository.findAdvertiseModelByUsername(username);
         }
         return Collections.emptyList();

@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -33,17 +34,17 @@ public class DefaultUserService implements UserService {
     private final PetifyMailService petifyMailService;
 
     @Override
-    public List<UserModel> getUsers(){
+    public List<UserModel> getUsers() {
 
         return userRepository.findAll();
     }
 
     @Override
-    public UserModel register(final RegisterDTO newUser){
+    public UserModel register(final RegisterDTO newUser) {
 
         final UserModel userModel = new UserModel();
 
-        try{
+        try {
             userModel.setUsername(newUser.getEmail());
             userModel.setPassword(petifyPasswordEncoder.encode(newUser.getPassword()));
             userModel.setFirstName(newUser.getFirstName());
@@ -60,7 +61,7 @@ public class DefaultUserService implements UserService {
 
             userRepository.save(userModel);
 
-        } catch (final Exception e){
+        } catch (final Exception e) {
             log.error("ERR: Unable to create new user, [ {} ]", newUser.getEmail());
         }
 
@@ -68,7 +69,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserModel updateProfile(final UpdateProfileDTO updateProfileDTO){
+    public UserModel updateProfile(final UpdateProfileDTO updateProfileDTO) {
 
         final String token = updateProfileDTO.getToken();
         final String email = updateProfileDTO.getEMail();
@@ -82,39 +83,38 @@ public class DefaultUserService implements UserService {
 
         final UserModel userByToken = StringUtils.hasText(token) ? userRepository.findByToken(token).orElseThrow() : null;
 
-        try{
-            if (Objects.nonNull(userByToken)){
-                if (StringUtils.hasText(email)){
+        try {
+            if (Objects.nonNull(userByToken)) {
+                if (StringUtils.hasText(email)) {
                     userByToken.setUsername(email);
                     userByToken.setEMail(email);
                 }
-                if (StringUtils.hasText(firstName)){
+                if (StringUtils.hasText(firstName)) {
                     userByToken.setFirstName(firstName);
                 }
-                if (StringUtils.hasText(lastName)){
+                if (StringUtils.hasText(lastName)) {
                     userByToken.setLastName(lastName);
                 }
-                if (StringUtils.hasText(phoneNumber)){
+                if (StringUtils.hasText(phoneNumber)) {
                     userByToken.setPhoneNumber(phoneNumber);
                 }
-                if (StringUtils.hasText(birthDate)){
+                if (StringUtils.hasText(birthDate)) {
                     userByToken.setBirthDate(birthDate);
                 }
-                if (StringUtils.hasText(gender)){
+                if (StringUtils.hasText(gender)) {
                     userByToken.setGender(gender);
                 }
-                if (StringUtils.hasText(address)){
+                if (StringUtils.hasText(address)) {
                     userByToken.setAddress(address);
                 }
-                if (StringUtils.hasText(image)){
+                if (StringUtils.hasText(image)) {
                     userByToken.setImage(image);
                 }
 
                 userRepository.save(userByToken);
             }
-        }
-        catch (final Exception e){
-            if (Objects.nonNull(userByToken) && StringUtils.hasText(token)){
+        } catch (final Exception e) {
+            if (Objects.nonNull(userByToken) && StringUtils.hasText(token)) {
                 log.error("ERR: Unable to update {} information's with JWT Token: {}", userByToken.getUsername(), token);
             }
         }
@@ -123,13 +123,12 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public void deleteByUsername(final String username){
+    public void deleteByUsername(final String username) {
 
-        try{
+        try {
             verificationTokenRepository.deleteByUsername(username);
             userRepository.deleteByUsername(username);
-        }
-        catch (final Exception e){
+        } catch (final Exception e) {
             log.error("ERR: Unable to delete user !");
         }
     }
@@ -140,7 +139,7 @@ public class DefaultUserService implements UserService {
         return userRepository.findUserModelByEMail(email);
     }
 
-    private void generateAndSendUserRegistrationMail(final String username){
+    private void generateAndSendUserRegistrationMail(final String username) {
         final String verificationToken = generateVerificationToken(username);
 
         UserRegisterMailEvent userRegisterMailEvent = new UserRegisterMailEvent();
@@ -157,7 +156,7 @@ public class DefaultUserService implements UserService {
         petifyMailService.sendUserRegisterMail(userRegisterMailEvent);
     }
 
-    private String generateVerificationToken(final String username){
+    private String generateVerificationToken(final String username) {
 
         final String verificationToken = UUID.randomUUID().toString().substring(0, 6);
 

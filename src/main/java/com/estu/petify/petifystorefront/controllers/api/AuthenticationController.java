@@ -41,14 +41,20 @@ public class AuthenticationController extends CustomAbstractController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestBody final RefreshTokenDTO refreshTokenDTO) {
-
         petifyAuthService.logout(refreshTokenDTO);
 
         return new ResponseEntity<>("Refresh Token deleted. || Logged Out Successfully.", HttpStatus.OK);
     }
 
     @GetMapping("/current-user")
-    public ResponseEntity<UserModel> getCurrentUserByJwtToken(@RequestParam final String jwtToken){
+    public ResponseEntity<UserModel> getCurrentUserFromSession() {
+        final UserModel currentUser = petifyAuthService.getCurrentUser();
+
+        return Objects.nonNull(currentUser) ? new ResponseEntity<>(currentUser, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/current-user/token")
+    public ResponseEntity<UserModel> getCurrentUserByJwtToken(@RequestParam final String jwtToken) {
 
         final UserModel currentUserByToken = StringUtils.hasText(jwtToken) ? petifyAuthService.getCurrentUserByToken(jwtToken) : null;
 

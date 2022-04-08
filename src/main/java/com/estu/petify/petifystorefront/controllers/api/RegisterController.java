@@ -25,7 +25,7 @@ public class RegisterController extends CustomAbstractController {
 
 
     @PostMapping()
-    public ResponseEntity<UserModel> register(@Valid @RequestBody final RegisterDTO registerDTO){
+    public ResponseEntity<UserModel> register(@Valid @RequestBody final RegisterDTO registerDTO) {
         final UserModel newUser = defaultUserService.register(registerDTO);
         log.info("INFO: Successfully created Petify user for {}.", newUser.getUsername());
         return new ResponseEntity<>(newUser, HttpStatus.OK);

@@ -2,7 +2,6 @@ package com.estu.petify.petifycore.config.security.jwt;
 
 import com.estu.petify.petifycore.exceptions.PetifyJwtException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContext;
@@ -15,7 +14,6 @@ import java.io.InputStream;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.time.Instant;
-import java.util.Date;
 
 import static io.jsonwebtoken.Jwts.parser;
 import static java.util.Date.from;
@@ -34,13 +32,12 @@ public class JwtProvider {
             keyStore = KeyStore.getInstance("JKS");
             InputStream resourceAsStream = getClass().getResourceAsStream("/springblog.jks");
             keyStore.load(resourceAsStream, "secret".toCharArray());
-        } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
+        } catch (final KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
             throw new PetifyJwtException("Exception occurred while loading keystore", e);
         }
-
     }
 
-    public String generateJwtToken(SecurityContext securityContext) throws PetifyJwtException {
+    public String generateJwtToken(final SecurityContext securityContext) throws PetifyJwtException {
         User principal = (User) securityContext.getAuthentication().getPrincipal();
         return Jwts.builder()
                 .setSubject(principal.getUsername())
@@ -62,7 +59,7 @@ public class JwtProvider {
         }
     }
 
-    private PublicKey getPublicKey() throws PetifyJwtException, KeyStoreException {
+    private PublicKey getPublicKey() throws KeyStoreException {
         return keyStore.getCertificate("springblog").getPublicKey();
     }
 

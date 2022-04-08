@@ -14,7 +14,7 @@ public class MailContentBuilder {
 
     private final TemplateEngine templateEngine;
 
-    public String buildUserRegisterMail(final String message, final String username){
+    public String buildUserRegisterMail(final String message, final String username) {
         Context context = new Context();
         context.setVariable("username", username);
         context.setVariable("message", message);

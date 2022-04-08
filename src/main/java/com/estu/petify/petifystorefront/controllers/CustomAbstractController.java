@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,9 +15,8 @@ public abstract class CustomAbstractController {
 
 
     /**
-     * @param      :Method_Argument_Not_Valid_Exception
-     *
-     * @return     :API_Validation_Messages
+     * @param :Method_Argument_Not_Valid_Exception
+     * @return :API_Validation_Messages
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
