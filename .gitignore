@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 ### Sevsitive Data ###
-application.properties
+src/main/resources/application.properties
 
 
 ### STS ###
